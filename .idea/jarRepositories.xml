@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="15deef2c-a828-4b43-9a11-aa88c3fa4de3" />
+      <option name="name" value="15deef2c-a828-4b43-9a11-aa88c3fa4de3" />
+      <option name="url" value="http://maven.aspose.com/artifactory/libs-release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="f6a0b81b-5fe5-41ae-baad-53aaa90b3415" />
+      <option name="name" value="f6a0b81b-5fe5-41ae-baad-53aaa90b3415" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="73a65085-51fd-420c-973b-3609ebdbb5a1" />
+      <option name="name" value="73a65085-51fd-420c-973b-3609ebdbb5a1" />
+      <option name="url" value="http://central.maven.org/maven2/" />
+    </remote-repository>
+  </component>
+</project>
