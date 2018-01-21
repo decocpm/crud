@@ -1,5 +1,7 @@
 package br.com.crud.rest.dto;
 
+import br.com.crud.rest.model.Usuario;
+
 import java.util.Date;
 
 public class UsuarioDTO {
@@ -7,8 +9,19 @@ public class UsuarioDTO {
     private Long id;
     private String nome;
     private Date dataNascimento;
-    private Long genero;
-    private String estado;
+    private int genero;
+    private int estado;
+
+    public UsuarioDTO(Usuario usuario) {
+        if (usuario == null)
+            return;
+
+        this.id = usuario.getId();
+        this.nome = usuario.getNome();
+        this.dataNascimento = usuario.getDataNascimento();
+        this.genero = usuario.getGenero();
+        this.estado = usuario.getEstado();
+    }
 
     public Long getId() {
         return id;
@@ -34,19 +47,19 @@ public class UsuarioDTO {
         this.dataNascimento = dataNascimento;
     }
 
-    public Long getGenero() {
+    public int getGenero() {
         return genero;
     }
 
-    public void setGenero(Long genero) {
+    public void setGenero(int genero) {
         this.genero = genero;
     }
 
-    public String getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 }
