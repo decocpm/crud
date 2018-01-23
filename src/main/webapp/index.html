@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>CRUD</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var loggedIn = false;
+            $('form[name=loginForm]').submit(function () {
+                $.post($(this).attr('action'), $(this).serialize(), function (res) {
+                    if (res == 'OK') {
+                        loggedIn = true;
+                        $("form[name=loginForm]").hide();
+                        $("form[name=logoutForm]").show();
+                        $("form[name=newNodeForm]").show()
+                        refreshList();
+                    } else {
+                        alert("Couldn't log you in, please check the user name and password!")
+                    }
+                });
+                return false; // prevent default action
+            });
+            $('form[name=logoutForm]').submit(function () {
+                $.post($(this).attr('action'), $(this).serialize(), function (res) {
+                    loggedIn = false;
+                    $("form[name=loginForm]").show();
+                    $("form[name=logoutForm]").hide();
+                    $("form[name=newNodeForm]").hide();
+                    refreshList();
+                });
+                return false; // prevent default action
+            });
+            function refreshList() {
+                $("#contentList").html("Loading...");
+                $.ajax({
+                    url: "/cms/render/live/en/sites/systemsite/contents.full.json?prettyPrint=true",
+                    cache: false
+                }).done(function (json) {
+                    var listNode = $("#contentList");
+                    var listHTML = '<table class="table table-striped">';
+                    listHTML += "<thead><tr><th>Node name</th><th>Type</th><th>Text</th></tr></thead>"
+                    if (json.hasChildren) {
+                        $.each(json.childNodes, function (index, data) {
+                            listHTML += '<tr><td>' + data['j:nodename'] +
+                                '</td><td>' + data['jcr:primaryType'] +
+                                '</td><td>' + data['text'] + '</td></tr>';
+                        });
+                    }
+                    listHTML += '</table>';
+                    listNode.html(listHTML);
+                });
+            }
+            $('form[name=newNodeForm]').submit(function () {
+                $.post($(this).attr('action'), $(this).serialize(), function (res) {
+                    alert('Content created successfully');
+                    refreshList();
+                });
+                return false; // prevent default action
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+<form name='loginForm' action="/cms/login">
+    <fieldset>
+        <legend>Login</legend>
+        <label for="UserName">User name:</label>
+        <input id="UserName" type="text" name="username"/>
+        <label for="Password">Password:</label>
+        <input id="Password" type="password" name="password"/>
+        <input type="hidden" name="redirectActive" value="false"/>
+        <input type="hidden" name="restMode" value="false"/>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </fieldset>
+</form>
+
+<form name='logoutForm' action="/cms/logout" style="display:none">
+    <fieldset>
+        <legend>Logout</legend>
+        <input type="hidden" name="redirectActive" value="false"/>
+        <input type="hidden" name="restMode" value="false"/>
+        <button class="btn btn-primary" type="submit">Logout</button>
+    </fieldset>
+</form>
+
+<div id="contentList"></div>
+
+<form name='newNodeForm' action='/cms/render/live/en/sites/systemsite/contents/*' style="display:none">
+    <fieldset>
+        <legend>New node</legend>
+        <label for="nodeText">Text:</label>
+        <input id="nodeText" type="text" name="text" placeholder="Enter your text here..."/>
+        <label for="jcrNodeName">Node name:</label>
+        <input id="jcrNodeName" type="text" name="jcrNodeName" placeholder="Enter a node name here (optional)..."/>
+        <input type="hidden" name="jcrNodeType" value="jnt:text"/>
+        <input type="hidden" name="jcrReturnContentType" value="json"/>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </fieldset>
+</form>
+
+</body>
+</html>

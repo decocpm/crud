@@ -1,16 +1,24 @@
 package br.com.crud.rest.dto;
 
 import br.com.crud.rest.model.Usuario;
+import br.com.crud.rest.util.Util;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 public class UsuarioDTO {
 
     private Long id;
     private String nome;
-    private Date dataNascimento;
-    private int genero;
-    private int estado;
+    private String dataNascimento;
+    private String genero;
+    private String estado;
+    private String cidade;
+    private String cpfCnpj;
+    private Double salarioReceita;
 
     public UsuarioDTO(Usuario usuario) {
         if (usuario == null)
@@ -18,9 +26,23 @@ public class UsuarioDTO {
 
         this.id = usuario.getId();
         this.nome = usuario.getNome();
-        this.dataNascimento = usuario.getDataNascimento();
+        this.dataNascimento = Util.formataData(usuario.getDataNascimento());
         this.genero = usuario.getGenero();
+        this.cidade = usuario.getCidade();
         this.estado = usuario.getEstado();
+        this.cpfCnpj = usuario.getCpfCnpj();
+        this.salarioReceita = usuario.getSalarioReceita();
+    }
+
+    public UsuarioDTO(Long id, String nome, String dataNascimento, String genero, String estado, String cidade, String cpfCnpj, String salarioReceita) throws Exception {
+        this.id = id;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cpfCnpj = cpfCnpj;
+        this.salarioReceita = (salarioReceita != null ? new Double(salarioReceita) : null);
     }
 
     public Long getId() {
@@ -39,27 +61,52 @@ public class UsuarioDTO {
         this.nome = nome;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public int getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(int genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public Double getSalarioReceita() {
+        return salarioReceita;
+    }
+
+    public void setSalarioReceita(Double salarioReceita) {
+        this.salarioReceita = salarioReceita;
+    }
+
 }

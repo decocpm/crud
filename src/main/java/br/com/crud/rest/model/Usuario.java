@@ -9,7 +9,6 @@ import java.util.Date;
 public class Usuario implements Serializable {
 
     public static final String SALARIO_RECEITA = "salario_receita";
-    public static final String TIPO_USUARIO = "tipo_usuario";
     public static final String CPF_CNPJ = "cpf_cnpj";
     public static final String CIDADE = "cidade";
     public static final String ESTADO = "estado";
@@ -17,8 +16,6 @@ public class Usuario implements Serializable {
     public static final String DATA_NASCIMENTO = "data_nascimento";
     public static final String NOME = "nome";
     public static final String ID = "id";
-    public static final String DATA_CRIACAO = "data_criacao";
-    public static final String DATA_ATUALIZACAO = "data_atualizacao";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,25 +29,19 @@ public class Usuario implements Serializable {
     private Date dataNascimento;
 
     @Column(name = GENERO, nullable = false)
-    private int genero;
+    private String genero;
+
+    @Column(name = CIDADE, nullable = false)
+    private String cidade;
 
     @Column(name = ESTADO, nullable = false)
-    private int estado;
+    private String estado;
 
     @Column(name = CPF_CNPJ, nullable = false, unique = true, length = 14)
     private String cpfCnpj;
 
-    @Column(name = TIPO_USUARIO, nullable = false)
-    private int tipoUsuario;
-
     @Column(name = SALARIO_RECEITA, precision = 2)
     private Double salarioReceita;
-
-    @Column(name = DATA_CRIACAO, nullable = false, updatable = false)
-    private Date dataCriacao;
-
-    @Column(name = DATA_ATUALIZACAO, nullable = false)
-    private Date dataAtualizacao;
 
     public Long getId() {
         return id;
@@ -76,19 +67,27 @@ public class Usuario implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public int getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(int genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public int getEstado() {
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -100,14 +99,6 @@ public class Usuario implements Serializable {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public int getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(int tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
     public Double getSalarioReceita() {
         return salarioReceita;
     }
@@ -116,19 +107,4 @@ public class Usuario implements Serializable {
         this.salarioReceita = salarioReceita;
     }
 
-    public Date getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(Date dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public Date getDataAtualizacao() {
-        return dataAtualizacao;
-    }
-
-    public void setDataAtualizacao(Date dataAtualizacao) {
-        this.dataAtualizacao = dataAtualizacao;
-    }
 }

@@ -36,7 +36,6 @@ public abstract class AbstractDAO<PK extends Serializable, T> {
 
         try {
             transaction = getSession().beginTransaction();
-            CriteriaBuilder cb = getSession().getCriteriaBuilder();
             object = getSession().get(this.clazz, id);
             transaction.commit();
         } catch (Exception e) {
@@ -47,7 +46,7 @@ public abstract class AbstractDAO<PK extends Serializable, T> {
             }
             throw e;
         } finally {
-            HibernateUtil.closeSession();
+            getSession().close();
         }
 
         return (T) object;
@@ -89,7 +88,7 @@ public abstract class AbstractDAO<PK extends Serializable, T> {
             }
             throw e;
         } finally {
-            HibernateUtil.closeSession();
+            getSession().close();
         }
     }
 
@@ -99,8 +98,8 @@ public abstract class AbstractDAO<PK extends Serializable, T> {
         List<T> resultList;
 
         try {
-            transaction = getSession().beginTransaction();
             resultList = getSession().createQuery(query).getResultList();
+            transaction = getSession().getTransaction();
             transaction.commit();
         } catch (Exception e) {
             System.err.println("Exceção capturada na transação:");
@@ -110,7 +109,7 @@ public abstract class AbstractDAO<PK extends Serializable, T> {
             }
             throw e;
         } finally {
-            HibernateUtil.closeSession();
+            getSession().close();
         }
 
         return resultList;
